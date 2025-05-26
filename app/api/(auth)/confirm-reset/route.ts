@@ -1,4 +1,4 @@
-import { isPasswordStrong } from "@/helpers/checkPasswordStrength";
+import { isPasswordStrong } from "@/helpers/check-password-strength";
 import connectToDatabase from "@/lib/db";
 import { User } from "@/models/user.model";
 import bcrypt from "bcryptjs";

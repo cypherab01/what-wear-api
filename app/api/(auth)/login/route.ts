@@ -1,6 +1,8 @@
 import connectToDatabase from "@/lib/db";
 import { User } from "@/models/user.model";
 import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
@@ -8,7 +10,7 @@ export async function POST(req: NextRequest) {
     await connectToDatabase();
     const { email, password } = await req.json();
 
-    const user = await User.findOne({ email }).select("-password");
+    const user = await User.findOne({ email });
 
     if (!user) {
       return NextResponse.json({ error: "User not found." }, { status: 404 });
@@ -29,7 +31,13 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Invalid password." }, { status: 401 });
     }
 
-    return NextResponse.json({ message: "Login successful.", user });
+    // Generate JWT token
+    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET!);
+
+    return NextResponse.json({
+      message: "Login successful.",
+      token,
+    });
   } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }

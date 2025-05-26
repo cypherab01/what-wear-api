@@ -12,7 +12,7 @@ export async function POST(req: NextRequest) {
 
     const existingUser = await User.findOne({ email });
 
-    if (!existingUser?.isVerified) {
+    if (existingUser && !existingUser?.isVerified) {
       await sendEmail({
         email,
         emailType: "VERIFY",
