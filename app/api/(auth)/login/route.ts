@@ -18,14 +18,10 @@ export async function POST(req: NextRequest) {
     }
 
     if (!user.isVerified) {
-      await sendEmail({
-        email,
-        emailType: "VERIFY",
-      });
       return NextResponse.json(
         {
           error:
-            "Email not verified. This doesn't ensure you have entered your correct credentials. Please verify your email first.",
+            "Email not verified. Please signup again & verify your email first.",
         },
         { status: 403 }
       );
