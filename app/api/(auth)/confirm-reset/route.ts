@@ -29,7 +29,10 @@ export async function POST(req: NextRequest) {
     user.otpExpires = undefined;
     await user.save();
 
-    return NextResponse.json({ message: "Password reset successfully." });
+    return NextResponse.json(
+      { message: "Password reset successfully." },
+      { status: 200 }
+    );
   } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }

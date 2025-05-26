@@ -19,7 +19,8 @@ export async function POST(req: NextRequest) {
       });
       return NextResponse.json(
         {
-          error: "User not verified, please check your email for verification",
+          error:
+            "User not verified, please check your email for newly generated OTP for verification",
         },
         { status: 400 }
       );

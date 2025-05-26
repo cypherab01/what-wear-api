@@ -34,10 +34,15 @@ export async function POST(req: NextRequest) {
     // Generate JWT token
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET!);
 
-    return NextResponse.json({
-      message: "Login successful.",
-      token,
-    });
+    return NextResponse.json(
+      {
+        message: "Login successful.",
+        token,
+      },
+      {
+        status: 200,
+      }
+    );
   } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
