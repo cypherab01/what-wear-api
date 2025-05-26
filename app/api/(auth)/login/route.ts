@@ -1,3 +1,4 @@
+import { sendEmail } from "@/helpers/send-mail";
 import connectToDatabase from "@/lib/db";
 import { User } from "@/models/user.model";
 import bcrypt from "bcryptjs";
@@ -17,6 +18,10 @@ export async function POST(req: NextRequest) {
     }
 
     if (!user.isVerified) {
+      await sendEmail({
+        email,
+        emailType: "VERIFY",
+      });
       return NextResponse.json(
         {
           error:

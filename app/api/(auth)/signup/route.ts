@@ -22,14 +22,14 @@ export async function POST(req: NextRequest) {
           error:
             "User not verified, please check your email for newly generated OTP for verification",
         },
-        { status: 400 }
+        { status: 403 }
       );
     }
 
     if (existingUser && existingUser.isVerified) {
       return NextResponse.json(
         { error: "User already exists, please login" },
-        { status: 400 }
+        { status: 409 }
       );
     }
 
